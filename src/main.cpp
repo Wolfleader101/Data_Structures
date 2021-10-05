@@ -43,7 +43,7 @@ int main()
 	}
 	std::cout << std::endl;
 
-
+	std::cout << "index of 29: " << array.indexOf(29) << std::endl;
 
 	std::cin.get();
 }

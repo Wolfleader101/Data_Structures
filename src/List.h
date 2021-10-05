@@ -157,4 +157,13 @@ public:
 		return &m_Data[index];
 	}
 
+	int32_t indexOf(T value)
+	{
+		for(int i = 0; i < m_Length; ++i)
+		{
+			if (m_Data[i] == value) return i;
+		}
+		return -1;
+	}
+
 };
