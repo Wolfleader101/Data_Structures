@@ -25,15 +25,20 @@ private:
 				{
 					mem[i] = m_Data[i];
 				}
-				// TODO look at ways to make sure if newLength is greater that it initializes values
-				//if (newLength > m_Length)
-				//{
-				//	mem[newLength - 1] = 0;
-				//}
-				
+
+				if (newLength > m_Length)
+				{
+					int diff = newLength - m_Length;
+					for (int i = 1; i <= diff; ++i)
+					{
+						int z = newLength - i;
+						mem[z] = 0;
+					}
+				}
+
 				std::swap(mem, m_Data);
 				m_Length = newLength;
-				
+
 				delete[] mem;
 			}
 			else
@@ -45,9 +50,9 @@ private:
 
 public:
 	List()
-		: m_Length(0), m_Data(nullptr){}
+		: m_Length(0), m_Data(nullptr) {}
 
-	List(uint32_t length) 
+	List(uint32_t length)
 		: m_Length(length), m_Data(new T[length])
 	{
 		for (int i = 0; i < m_Length; ++i)
@@ -56,9 +61,9 @@ public:
 		}
 	}
 
-	~List() {delete m_Data;}
+	~List() { delete m_Data; }
 
-	uint32_t length() const	{return m_Length;}
+	uint32_t length() const { return m_Length; }
 
 	void add(T el)
 	{
@@ -81,7 +86,7 @@ public:
 			{
 				m_Data[index] = el;
 			}
-			
+
 		}
 		else {
 			//throw
@@ -93,30 +98,27 @@ public:
 		if (index <= m_Length)
 		{
 			const auto new_size = m_Length + 1;
-
 			if (T* mem = new T[new_size])
 			{
-				auto to_read = std::min(new_size, m_Length);
-
 				T prev_value = 0;
-				for (int i = 0; i < to_read; ++i)
+				for (int i = 0; i < new_size; ++i)
 				{
 					if (i < index)
 					{
 						mem[i] = m_Data[i];
 						continue;
 					}
-					if (i >= index)
+					if (i == index)
 					{
 						prev_value = m_Data[i];
-						if (i == index)
-						{
-							mem[i] = value;
-							continue;
-						}
-						mem[i] = prev_value;
+						mem[i] = value;
+						continue;
 					}
-					
+					if (i > index)
+					{
+						mem[i] = prev_value;
+						prev_value = m_Data[i];
+					}
 				}
 
 				std::swap(mem, m_Data);
@@ -128,9 +130,6 @@ public:
 			{
 				throw std::bad_alloc();
 			}
-
-			//resize(new_size);
-			//m_Data[index] = el;
 		}
 		else
 		{
