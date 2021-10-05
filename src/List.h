@@ -8,20 +8,41 @@ class List
 {
 private:
 	T* m_Data;
-	size_t m_Size;
 	uint32_t m_Length;
 
-	void resize(uint32_t newSize)
+	void resize(uint32_t newLength)
 	{
-		if (newSize == 0) {
+		if (newLength == 0) {
 			delete m_Data;
 			m_Data = nullptr;
 		}
 		else {
-			if (T* mem = new T[newSize])
+
+			if (T* mem = new T[newLength])
 			{
-				delete m_Data;
-				m_Data = mem;
+				if (newLength < m_Length)
+				{
+					for (int i = 0; i < newLength; ++i)
+					{
+						mem[i] = m_Data[i];
+					}
+					m_Length--;
+				}
+				else
+				{
+					for (int i = 0; i < m_Length; ++i)
+					{
+						mem[i] = m_Data[i];
+					}
+
+					mem[newLength - 1] = 0;
+					m_Length++;
+				}
+				
+				std::swap(mem, m_Data);
+				
+
+				delete[] mem;
 			}
 			else
 			{
@@ -32,10 +53,10 @@ private:
 
 public:
 	List()
-		: m_Length(0), m_Size(0), m_Data(nullptr){}
+		: m_Length(0), m_Data(nullptr){}
 
 	List(uint32_t length) 
-		: m_Length(length), m_Size(length * sizeof(T)), m_Data(new T[length])
+		: m_Length(length), m_Data(new T[length])
 	{
 		for (int i = 0; i < m_Length; ++i)
 		{
@@ -45,17 +66,17 @@ public:
 
 	~List() {delete m_Data;}
 
-	size_t size() const	{return m_Size;}
+	//size_t size() const	{return m_Size;}
 
 	uint32_t length() const	{return m_Length;}
 
 	void add(T el)
 	{
-		m_Length++;
-		m_Size = m_Length * sizeof(T);
-		resize(m_Length);
-		m_Data[m_Length] = el;
+		const auto new_size = m_Length + 1;
 
+		resize(new_size);
+
+		m_Data[new_size - 1] = el;
 	}
 
 	void insert(uint32_t index, T el)
@@ -75,6 +96,16 @@ public:
 		//m_Data[m_Length] = el;
 
 		//return m_Length;
+	}
+
+	T pop()
+	{
+		const auto new_size = m_Length - 1;
+		const auto popped_item = m_Data[new_size];
+
+		resize(new_size);
+
+		return popped_item;
 	}
 
 	T get(uint32_t index)

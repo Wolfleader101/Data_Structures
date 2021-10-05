@@ -6,15 +6,33 @@ int main()
 {
 	List<int> array = List<int>(5);
 	std::cout << "Length: " << array.length() << std::endl;
-	std::cout << "Size: " << array.size() << std::endl;
 
-	array.add(2);
+	
 	array.insert(0, 5);
+	array.insert(1, 69);
+	array.insert(2, 420);
+	array.insert(3, 29);
+	array.insert(4, 15);
+	array.add(2);
 
-	std::cout << "Length: " << array.length() << std::endl;
-	std::cout << "Size: " << array.size() << std::endl;
-	std::cout << "first el: " << array.get(0) << std::endl;
-	std::cout << "last el: " << array.get(array.length()) << std::endl;
+	std::cout << "New Length: " << array.length() << std::endl;
+	std::cout << std::endl;
 
+	for (int i = 0; i < array.length(); ++i)
+	{
+		std::cout << i << "'s el: " << array.get(i) << std::endl;
+	}
+	std::cout << std::endl;
+
+	int poppedItem = array.pop();
+	std::cout << "New Length: " << array.length() << std::endl;
+	std::cout << "Popped item: " << poppedItem << std::endl;
+	
+
+	for (int i = 0; i < array.length(); ++i)
+	{
+		std::cout << i << "'s el: " << array.get(i) << std::endl;
+	}
+	std::cout << std::endl;
 	std::cin.get();
 }
