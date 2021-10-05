@@ -13,8 +13,8 @@ private:
 	void resize(uint32_t newLength)
 	{
 		if (newLength == 0) {
-			delete m_Data;
-			m_Data = nullptr;
+			m_Data = new T[0];
+			m_Length = 0;
 		}
 		else {
 
@@ -43,14 +43,14 @@ private:
 			}
 			else
 			{
-				throw std::bad_alloc();
+				throw std::bad_alloc("Could not resize List");
 			}
 		}
 	}
 
 public:
 	List()
-		: m_Length(0), m_Data(nullptr) {}
+		: m_Length(0), m_Data(new T[0]) {}
 
 	List(uint32_t length)
 		: m_Length(length), m_Data(new T[length])
@@ -61,7 +61,23 @@ public:
 		}
 	}
 
+	List(T* array, int length)
+		: m_Length(length)
+	{
+		m_Data = new T[m_Length];
+		for (int i = 0; i < m_Length; ++i)
+		{
+			m_Data[i] = array[i];
+		}
+	}
+
+
 	~List() { delete m_Data; }
+
+	void clear()
+	{ 
+		resize(0);
+	}
 
 	uint32_t length() const { return m_Length; }
 
@@ -76,7 +92,7 @@ public:
 
 	void replace(uint32_t index, T el, bool only_if_null = false)
 	{
-		if (index <= m_Length)
+		if (index <= m_Length && m_Length != 0)
 		{
 			if (only_if_null && m_Data[index] == 0)
 			{
@@ -89,13 +105,13 @@ public:
 
 		}
 		else {
-			//throw
+			throw std::range_error("Index is out of bounds or length is 0");
 		}
 	}
 
 	void insert(uint32_t index, T value)
 	{
-		if (index <= m_Length)
+		if (index <= m_Length && m_Length != 0)
 		{
 			const auto new_size = m_Length + 1;
 			if (T* mem = new T[new_size])
@@ -133,7 +149,7 @@ public:
 		}
 		else
 		{
-			//throw
+			throw std::range_error("Index is out of bounds or length is 0");
 		}
 	}
 
