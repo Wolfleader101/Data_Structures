@@ -11,16 +11,16 @@ private:
 	size_t m_Size;
 	uint32_t m_Length;
 
-	// resize method from cppref
-	void resize(size_t newSize)
+	void resize(uint32_t newSize)
 	{
-		if (newSize == 0) { // this check is not strictly needed, but zero-size realloc is deprecated in C
-			std::free(m_Data); // free the memory
+		if (newSize == 0) {
+			delete m_Data;
 			m_Data = nullptr;
 		}
 		else {
-			if (void* mem = std::realloc(m_Data, newSize))
+			if (T* mem = new T[newSize])
 			{
+				delete m_Data;
 				m_Data = static_cast<T*>(mem);
 			}
 			else
@@ -35,12 +35,12 @@ public:
 		: m_Length(0), m_Size(0), m_Data(nullptr){}
 
 	List(uint32_t length) 
-		: m_Length(length), m_Size(length * sizeof(T)), m_Data((T*)std::calloc(length, sizeof(T)))
+		: m_Length(length), m_Size(length * sizeof(T)), m_Data(new T[length])
 	{
 	}
 
 	~List() {
-		std::free(m_Data);
+		delete m_Data;
 	}
 
 	size_t size() const	{return m_Size;}
@@ -51,7 +51,7 @@ public:
 	{
 		m_Length++;
 		m_Size = m_Length * sizeof(T);
-		resize(m_Size);
+		resize(m_Length);
 		m_Data[m_Length] = el;
 
 	}
