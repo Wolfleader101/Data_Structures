@@ -198,11 +198,25 @@ public:
 	
 	bool remove(T item)
 	{
+		for (uint32_t i = 0; i < m_Length; ++i)
+		{
+			if (m_Data[i] == item)
+			{
+				removeAt(i);
+				return true;
+			}
+		}
+
 		return false;
 	}
 
 	bool contains(T item)
 	{
+		for (uint32_t i = 0; i < m_Length; ++i)
+		{
+			if (m_Data[i] == item) return true;
+		}
+
 		return false;
 	}
 

@@ -4,6 +4,7 @@
 
 void PrintList(List<int>& array)
 {
+	std::cout << std::endl;
 	std::cout << "----------" << std::endl;
 	std::cout << "Length: " << array.length() << std::endl;
 	std::cout << std::endl;
@@ -13,7 +14,7 @@ void PrintList(List<int>& array)
 		std::cout << i << "'s el: " << array.get(i) << std::endl;
 	}
 
-	std::cout << "-----------" << std::endl;
+	std::cout << "----------" << std::endl;
 	std::cout << std::endl;
 }
 
@@ -42,7 +43,14 @@ int main()
 	//array.clear();
 
 	array.removeAt(3);
+	
 	array.add(1);
+
+	PrintList(array);
+
+	std::cout << "contains 4: " << array.contains(4) << std::endl;
+	std::cout << "could remove: " << array.remove(4) << std::endl;
+	std::cout << "contains 4: " << array.contains(4) << std::endl;
 
 	PrintList(array);
 
