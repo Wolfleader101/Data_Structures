@@ -10,7 +10,7 @@ int main()
 	std::cout << "Length: " << array.length() << std::endl;
 	std::cout << std::endl;
 
-	for (int i = 0; i < array.length(); ++i)
+	for (uint32_t i = 0; i < array.length(); ++i)
 	{
 		std::cout << i << "'s el: " << array.get(i) << std::endl;
 	}
@@ -25,7 +25,7 @@ int main()
 	std::cout << "Length: " << array.length() << std::endl;
 	std::cout << std::endl;
 
-	for (int i = 0; i < array.length(); ++i)
+	for (uint32_t i = 0; i < array.length(); ++i)
 	{
 		std::cout << i << "'s el: " << array.get(i) << std::endl;
 	}
@@ -37,7 +37,7 @@ int main()
 	std::cout << "Length: " << array.length() << std::endl;
 	std::cout << std::endl;
 
-	for (int i = 0; i < array.length(); ++i)
+	for (uint32_t i = 0; i < array.length(); ++i)
 	{
 		std::cout << i << "'s el: " << array.get(i) << std::endl;
 	}
@@ -45,16 +45,16 @@ int main()
 
 	std::cout << "index of 29: " << array.indexOf(29) << std::endl;
 
-	array.clear();
+	//array.clear();
 
-	array.add(1);
+	//array.add(1);
 
 
-	for (int i = 0; i < array.length(); ++i)
-	{
-		std::cout << i << "'s el: " << array.get(i) << std::endl;
-	}
-	std::cout << std::endl;
+	//for (int i = 0; i < array.length(); ++i)
+	//{
+	//	std::cout << i << "'s el: " << array.get(i) << std::endl;
+	//}
+	//std::cout << std::endl;
 
 	std::cin.get();
 }

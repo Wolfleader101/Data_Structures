@@ -10,40 +10,40 @@ private:
 	T* m_Data;
 	uint32_t m_Length;
 
-	void resize(uint32_t newLength)
+	void resize(uint32_t new_length)
 	{
-		if (newLength == 0) {
+		if (new_length == 0) {
 			m_Data = new T[0];
 			m_Length = 0;
 		}
 		else {
 
-			if (T* mem = new T[newLength])
+			if (T* mem = new T[new_length])
 			{
-				auto to_read = std::min(newLength, m_Length);
-				for (int i = 0; i < to_read; ++i)
+				auto to_read = std::min(new_length, m_Length);
+				for (uint32_t i = 0; i < to_read; ++i)
 				{
 					mem[i] = m_Data[i];
 				}
 
-				if (newLength > m_Length)
+				if (new_length > m_Length)
 				{
-					int diff = newLength - m_Length;
+					int diff = new_length - m_Length;
 					for (int i = 1; i <= diff; ++i)
 					{
-						int z = newLength - i;
+						int z = new_length - i;
 						mem[z] = 0;
 					}
 				}
 
 				std::swap(mem, m_Data);
-				m_Length = newLength;
+				m_Length = new_length;
 
 				delete[] mem;
 			}
 			else
 			{
-				throw std::bad_alloc("Could not resize List");
+				throw std::bad_alloc();
 			}
 		}
 	}
@@ -65,12 +65,11 @@ public:
 		: m_Length(length)
 	{
 		m_Data = new T[m_Length];
-		for (int i = 0; i < m_Length; ++i)
+		for (uint32_t i = 0; i < m_Length; ++i)
 		{
 			m_Data[i] = array[i];
 		}
 	}
-
 
 	~List() { delete m_Data; }
 
@@ -117,7 +116,7 @@ public:
 			if (T* mem = new T[new_size])
 			{
 				T prev_value = 0;
-				for (int i = 0; i < new_size; ++i)
+				for (uint32_t i = 0; i < new_size; ++i)
 				{
 					if (i < index)
 					{
@@ -175,7 +174,7 @@ public:
 
 	int32_t indexOf(T value)
 	{
-		for(int i = 0; i < m_Length; ++i)
+		for(uint32_t i = 0; i < m_Length; ++i)
 		{
 			if (m_Data[i] == value) return i;
 		}
