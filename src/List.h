@@ -113,7 +113,7 @@ public:
 
 	T* getAddr(uint32_t index)
 	{
-		return &(m_Data[index]);
+		return &m_Data[index];
 	}
 
 };
