@@ -21,7 +21,7 @@ private:
 			if (T* mem = new T[newSize])
 			{
 				delete m_Data;
-				m_Data = static_cast<T*>(mem);
+				m_Data = mem;
 			}
 			else
 			{
@@ -37,11 +37,13 @@ public:
 	List(uint32_t length) 
 		: m_Length(length), m_Size(length * sizeof(T)), m_Data(new T[length])
 	{
+		for (int i = 0; i < m_Length; ++i)
+		{
+			m_Data[i] = 0;
+		}
 	}
 
-	~List() {
-		delete m_Data;
-	}
+	~List() {delete m_Data;}
 
 	size_t size() const	{return m_Size;}
 
