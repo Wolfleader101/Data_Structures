@@ -25,6 +25,11 @@ private:
 				{
 					mem[i] = m_Data[i];
 				}
+				// TODO look at ways to make sure if newLength is greater that it initializes values
+				//if (newLength > m_Length)
+				//{
+				//	mem[newLength - 1] = 0;
+				//}
 				
 				std::swap(mem, m_Data);
 				m_Length = newLength;
@@ -45,16 +50,13 @@ public:
 	List(uint32_t length) 
 		: m_Length(length), m_Data(new T[length])
 	{
-		// don't need to initialize this
-		//for (int i = 0; i < m_Length; ++i)
-		//{
-		//	m_Data[i] = 0;
-		//}
+		for (int i = 0; i < m_Length; ++i)
+		{
+			m_Data[i] = 0;
+		}
 	}
 
 	~List() {delete m_Data;}
-
-	//size_t size() const	{return m_Size;}
 
 	uint32_t length() const	{return m_Length;}
 
@@ -67,33 +69,73 @@ public:
 		m_Data[new_size - 1] = el;
 	}
 
-	void replace(uint32_t index, T el)
+	void replace(uint32_t index, T el, bool only_if_null = false)
 	{
 		if (index <= m_Length)
 		{
-			m_Data[index] = el;
-			//if(isNull && m_Data[index] == 0)
-			//{
-			//	m_Data[index] = el;
-			//	return;
-			//}
+			if (only_if_null && m_Data[index] == 0)
+			{
+				m_Data[index] = el;
+			}
+			else
+			{
+				m_Data[index] = el;
+			}
+			
+		}
+		else {
+			//throw
 		}
 	}
 
-	void insert(uint32_t index, T el)
+	void insert(uint32_t index, T value)
 	{
 		if (index <= m_Length)
 		{
-			m_Data[index] = el;
+			const auto new_size = m_Length + 1;
+
+			if (T* mem = new T[new_size])
+			{
+				auto to_read = std::min(new_size, m_Length);
+
+				T prev_value = 0;
+				for (int i = 0; i < to_read; ++i)
+				{
+					if (i < index)
+					{
+						mem[i] = m_Data[i];
+						continue;
+					}
+					if (i >= index)
+					{
+						prev_value = m_Data[i];
+						if (i == index)
+						{
+							mem[i] = value;
+							continue;
+						}
+						mem[i] = prev_value;
+					}
+					
+				}
+
+				std::swap(mem, m_Data);
+				m_Length = new_size;
+
+				delete[] mem;
+			}
+			else
+			{
+				throw std::bad_alloc();
+			}
+
+			//resize(new_size);
+			//m_Data[index] = el;
 		}
-
-
-		//m_Length++;
-		//m_Size = m_Length * sizeof(T);
-		//resize(m_Size);
-		//m_Data[m_Length] = el;
-
-		//return m_Length;
+		else
+		{
+			//throw
+		}
 	}
 
 	T pop()
