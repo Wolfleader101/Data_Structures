@@ -73,33 +73,33 @@ public:
 
 	~List() { delete m_Data; }
 
+	uint32_t length() const { return m_Length; }
+
 	void clear()
 	{ 
 		resize(0);
 	}
 
-	uint32_t length() const { return m_Length; }
-
-	void add(T el)
+	void add(T item)
 	{
 		const auto new_size = m_Length + 1;
 
 		resize(new_size);
 
-		m_Data[new_size - 1] = el;
+		m_Data[new_size - 1] = item;
 	}
 
-	void replace(uint32_t index, T el, bool only_if_null = false)
+	void replace(uint32_t index, T item, bool only_if_null = false)
 	{
 		if (index <= m_Length && m_Length != 0)
 		{
 			if (only_if_null && m_Data[index] == 0)
 			{
-				m_Data[index] = el;
+				m_Data[index] = item;
 			}
 			else
 			{
-				m_Data[index] = el;
+				m_Data[index] = item;
 			}
 
 		}
@@ -108,7 +108,7 @@ public:
 		}
 	}
 
-	void insert(uint32_t index, T value)
+	void insert(uint32_t index, T item)
 	{
 		if (index <= m_Length && m_Length != 0)
 		{
@@ -126,7 +126,7 @@ public:
 					if (i == index)
 					{
 						prev_value = m_Data[i];
-						mem[i] = value;
+						mem[i] = item;
 						continue;
 					}
 					if (i > index)
@@ -152,6 +152,60 @@ public:
 		}
 	}
 
+	void removeAt(uint32_t index)
+	{
+		if (index <= m_Length && m_Length != 0)
+		{
+			const auto new_size = m_Length - 1;
+			if (T* mem = new T[new_size])
+			{
+				for (uint32_t i = 0; i < new_size; ++i)
+				{
+					if (i < index)
+					{
+						mem[i] = m_Data[i];
+						continue;
+					}
+
+					if (i >= index)
+					{
+						mem[i] = m_Data[i + 1];
+					}
+				}
+
+				std::swap(mem, m_Data);
+				m_Length = new_size;
+
+				delete[] mem;
+			}
+			else
+			{
+				throw std::bad_alloc();
+			}
+		}
+		else
+		{
+			throw std::range_error("Index is out of bounds or length is 0");
+		}
+
+		//const auto new_size = m_Length - 1;
+		//const auto popped_item = m_Data[new_size];
+
+		//resize(new_size);
+
+		//return popped_item;
+	}
+	
+	bool remove(T item)
+	{
+		return false;
+	}
+
+	bool contains(T item)
+	{
+		return false;
+	}
+
 	T pop()
 	{
 		const auto new_size = m_Length - 1;
@@ -172,11 +226,11 @@ public:
 		return &m_Data[index];
 	}
 
-	int32_t indexOf(T value)
+	int32_t indexOf(T item)
 	{
 		for(uint32_t i = 0; i < m_Length; ++i)
 		{
-			if (m_Data[i] == value) return i;
+			if (m_Data[i] == item) return i;
 		}
 		return -1;
 	}

@@ -2,11 +2,9 @@
 #include "List.h"
 
 
-int main()
+void PrintList(List<int>& array)
 {
-	List<int> array = List<int>(new int[6]{ 1, 2, 3, 4, 5, 6 }, 6);
-	array.replace(0, 5);
-	
+	std::cout << "----------" << std::endl;
 	std::cout << "Length: " << array.length() << std::endl;
 	std::cout << std::endl;
 
@@ -14,47 +12,39 @@ int main()
 	{
 		std::cout << i << "'s el: " << array.get(i) << std::endl;
 	}
-	std::cout << std::endl;
 
+	std::cout << "-----------" << std::endl;
+	std::cout << std::endl;
+}
+
+int main()
+{
+	List<int> array = List<int>(new int[6]{ 1, 2, 3, 4, 5, 6 }, 6);
+		
+	PrintList(array);
+
+	array.replace(0, 5);
 	//array.insert(1, 69);
 	//array.insert(2, 420);
 	array.insert(3, 29);
 	//array.insert(4, 15);
-	//array.add(2);
+	array.add(2);
 
-	std::cout << "Length: " << array.length() << std::endl;
-	std::cout << std::endl;
+	PrintList(array);
 
-	for (uint32_t i = 0; i < array.length(); ++i)
-	{
-		std::cout << i << "'s el: " << array.get(i) << std::endl;
-	}
-	std::cout << std::endl;
 
-	int poppedItem = array.pop();
-	
-	std::cout << "Popped item: " << poppedItem << std::endl;
-	std::cout << "Length: " << array.length() << std::endl;
-	std::cout << std::endl;
+	std::cout << "Popped item indes: " << array.pop() << std::endl;
 
-	for (uint32_t i = 0; i < array.length(); ++i)
-	{
-		std::cout << i << "'s el: " << array.get(i) << std::endl;
-	}
-	std::cout << std::endl;
+	PrintList(array);
 
 	std::cout << "index of 29: " << array.indexOf(29) << std::endl;
 
 	//array.clear();
 
-	//array.add(1);
+	array.removeAt(3);
+	array.add(1);
 
-
-	//for (int i = 0; i < array.length(); ++i)
-	//{
-	//	std::cout << i << "'s el: " << array.get(i) << std::endl;
-	//}
-	//std::cout << std::endl;
+	PrintList(array);
 
 	std::cin.get();
 }
