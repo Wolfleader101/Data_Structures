@@ -20,28 +20,15 @@ private:
 
 			if (T* mem = new T[newLength])
 			{
-				if (newLength < m_Length)
+				auto to_read = std::min(newLength, m_Length);
+				for (int i = 0; i < to_read; ++i)
 				{
-					for (int i = 0; i < newLength; ++i)
-					{
-						mem[i] = m_Data[i];
-					}
-					m_Length--;
-				}
-				else
-				{
-					for (int i = 0; i < m_Length; ++i)
-					{
-						mem[i] = m_Data[i];
-					}
-
-					mem[newLength - 1] = 0;
-					m_Length++;
+					mem[i] = m_Data[i];
 				}
 				
 				std::swap(mem, m_Data);
+				m_Length = newLength;
 				
-
 				delete[] mem;
 			}
 			else
@@ -58,10 +45,11 @@ public:
 	List(uint32_t length) 
 		: m_Length(length), m_Data(new T[length])
 	{
-		for (int i = 0; i < m_Length; ++i)
-		{
-			m_Data[i] = 0;
-		}
+		// don't need to initialize this
+		//for (int i = 0; i < m_Length; ++i)
+		//{
+		//	m_Data[i] = 0;
+		//}
 	}
 
 	~List() {delete m_Data;}
@@ -79,14 +67,24 @@ public:
 		m_Data[new_size - 1] = el;
 	}
 
+	void replace(uint32_t index, T el)
+	{
+		if (index <= m_Length)
+		{
+			m_Data[index] = el;
+			//if(isNull && m_Data[index] == 0)
+			//{
+			//	m_Data[index] = el;
+			//	return;
+			//}
+		}
+	}
+
 	void insert(uint32_t index, T el)
 	{
 		if (index <= m_Length)
 		{
-			if (m_Data[index] == 0)
-			{
-				m_Data[index] = el;
-			}
+			m_Data[index] = el;
 		}
 
 
@@ -111,6 +109,11 @@ public:
 	T get(uint32_t index)
 	{
 		return m_Data[index];
+	}
+
+	T* getAddr(uint32_t index)
+	{
+		return &(m_Data[index]);
 	}
 
 };
