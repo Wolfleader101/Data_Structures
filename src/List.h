@@ -73,7 +73,7 @@ public:
 
 	~List() { delete m_Data; }
 
-	uint32_t length() const { return m_Length; }
+	uint32_t const& length() const { return m_Length; }
 
 	void clear()
 	{ 
@@ -196,6 +196,26 @@ public:
 		//return popped_item;
 	}
 	
+	void reverse()
+	{
+		if (T* mem = new T[m_Length])
+		{
+			for (int i = 0; i < m_Length; ++i)
+			{
+				int z = m_Length - (i + 1);
+				mem[i] = m_Data[z];
+			}
+
+			std::swap(mem, m_Data);
+
+			delete[] mem;
+		}
+		else
+		{
+			throw std::bad_alloc();
+		}
+	}
+
 	bool remove(T item)
 	{
 		for (uint32_t i = 0; i < m_Length; ++i)
@@ -230,7 +250,7 @@ public:
 		return popped_item;
 	}
 
-	T get(uint32_t index)
+	T const& get(uint32_t index)
 	{
 		return m_Data[index];
 	}

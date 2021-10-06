@@ -6,7 +6,7 @@ void PrintList(List<int>& array)
 {
 	std::cout << std::endl;
 	std::cout << "----------" << std::endl;
-	std::cout << "Length: " << array.length() << std::endl;
+	std::cout << "Length: " << array.length()  << std::endl;
 	std::cout << std::endl;
 
 	for (uint32_t i = 0; i < array.length(); ++i)
@@ -34,7 +34,7 @@ int main()
 	PrintList(array);
 
 
-	std::cout << "Popped item indes: " << array.pop() << std::endl;
+	std::cout << "Popped item: " << array.pop() << std::endl;
 
 	PrintList(array);
 
@@ -51,6 +51,10 @@ int main()
 	std::cout << "contains 4: " << array.contains(4) << std::endl;
 	std::cout << "could remove: " << array.remove(4) << std::endl;
 	std::cout << "contains 4: " << array.contains(4) << std::endl;
+
+	PrintList(array);
+
+	array.reverse();
 
 	PrintList(array);
 
