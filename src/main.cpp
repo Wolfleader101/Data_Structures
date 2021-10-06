@@ -54,7 +54,7 @@ int main()
 
 	PrintList(array);
 
-	array.reverse();
+	array.sort();
 
 	PrintList(array);
 
