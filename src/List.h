@@ -48,98 +48,21 @@ private:
 		}
 	}
 
-	void merge(T array[], uint32_t const left, uint32_t const mid, uint32_t const right)
+	void bubbleSort()
 	{
-		auto const subArrayOne = mid - left + 1;
-		auto const subArrayTwo = right - mid;
-
-		// Create temp arrays
-		T* leftArray = new T[subArrayOne];
-		T* rightArray = new T[subArrayTwo];
-
-		// Copy data to temp arrays leftArray[] and rightArray[]
-		for (uint32_t i = 0; i < subArrayOne; i++)
-			leftArray[i] = array[left + i];
-		for (uint32_t j = 0; j < subArrayTwo; j++)
-			rightArray[j] = array[mid + 1 + j];
-
-		uint32_t indexOfSubArrayOne = 0; // Initial index of first sub-array
-		uint32_t indexOfSubArrayTwo = 0; // Initial index of second sub-array
-		uint32_t indexOfMergedArray = left; // Initial index of merged array
-
-		// Merge the temp arrays back into array[left..right]
-		while (indexOfSubArrayOne < subArrayOne && indexOfSubArrayTwo < subArrayTwo) {
-			if (leftArray[indexOfSubArrayOne] <= rightArray[indexOfSubArrayTwo]) {
-				array[indexOfMergedArray] = leftArray[indexOfSubArrayOne];
-				indexOfSubArrayOne++;
-			}
-			else {
-				array[indexOfMergedArray] = rightArray[indexOfSubArrayTwo];
-				indexOfSubArrayTwo++;
-			}
-			indexOfMergedArray++;
-		}
-		// Copy the remaining elements of
-		// left[], if there are any
-		while (indexOfSubArrayOne < subArrayOne) {
-			array[indexOfMergedArray] = leftArray[indexOfSubArrayOne];
-			indexOfSubArrayOne++;
-			indexOfMergedArray++;
-		}
-		// Copy the remaining elements of
-		// right[], if there are any
-		while (indexOfSubArrayTwo < subArrayTwo) {
-			array[indexOfMergedArray] = rightArray[indexOfSubArrayTwo];
-			indexOfSubArrayTwo++;
-			indexOfMergedArray++;
-		}
-	}
-
-	void mergeSort(T array[], uint32_t const start, uint32_t const end)
-	{
-		if (start >= end) return;
-
-		uint32_t mid = start + (end - start) / 2;
-
-		mergeSort(array, start, mid);
-		mergeSort(array, mid + 1, end);
-
-		merge(array, start, mid, end);
-	}
-
-	void recursiveSort()
-	{
-		if (T* mem = new T[m_Length])
+		for (uint32_t i = 0; i < m_Length - 1; ++i)
 		{
-			for (uint32_t i = 0; i < m_Length - 1; ++i)
+			for (uint32_t j = 0; j < m_Length - 1; ++j)
 			{
-				uint32_t z = i + 1;
-				if (m_Data[z] < m_Data[i])
+				if (m_Data[j] > m_Data[j + 1])
 				{
-					mem[i] = m_Data[z];
-					mem[z] = m_Data[i];
-				}
-				else
-				{
-					mem[i] = m_Data[i];
-				}
-
-				for (uint32_t j = i + 1; j < m_Length; ++j)
-				{
-
+					T temp = m_Data[j];
+					m_Data[j] = m_Data[j + 1];
+					m_Data[j + 1] = temp;
 				}
 			}
-
-			std::swap(mem, m_Data);
-
-			delete[] mem;
-		}
-		else
-		{
-			throw std::bad_alloc();
 		}
 	}
-
 public:
 	List()
 		: m_Length(0), m_Data(new T[0]) {}
@@ -290,8 +213,7 @@ public:
 
 	void sort()
 	{
-		//mergeSort(m_Data, 0, m_Length - 1);
-		recursiveSort();
+		bubbleSort();
 	}
 
 	void reverse()
