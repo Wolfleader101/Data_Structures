@@ -24,6 +24,11 @@ int main()
 		
 	PrintList(array);
 
+	array.sort();
+
+	PrintList(array);
+
+
 	array.replace(0, 5);
 	//array.insert(1, 69);
 	//array.insert(2, 420);
@@ -51,10 +56,6 @@ int main()
 	std::cout << "contains 4: " << array.contains(4) << std::endl;
 	std::cout << "could remove: " << array.remove(4) << std::endl;
 	std::cout << "contains 4: " << array.contains(4) << std::endl;
-
-	PrintList(array);
-
-	array.sort();
 
 	PrintList(array);
 

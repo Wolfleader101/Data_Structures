@@ -107,6 +107,39 @@ private:
 		merge(array, start, mid, end);
 	}
 
+	void recursiveSort()
+	{
+		if (T* mem = new T[m_Length])
+		{
+			for (uint32_t i = 0; i < m_Length - 1; ++i)
+			{
+				uint32_t z = i + 1;
+				if (m_Data[z] < m_Data[i])
+				{
+					mem[i] = m_Data[z];
+					mem[z] = m_Data[i];
+				}
+				else
+				{
+					mem[i] = m_Data[i];
+				}
+
+				for (uint32_t j = i + 1; j < m_Length; ++j)
+				{
+
+				}
+			}
+
+			std::swap(mem, m_Data);
+
+			delete[] mem;
+		}
+		else
+		{
+			throw std::bad_alloc();
+		}
+	}
+
 public:
 	List()
 		: m_Length(0), m_Data(new T[0]) {}
@@ -135,7 +168,7 @@ public:
 	uint32_t const& length() const { return m_Length; }
 
 	void clear()
-	{ 
+	{
 		resize(0);
 	}
 
@@ -254,10 +287,11 @@ public:
 
 		//return popped_item;
 	}
-	
+
 	void sort()
 	{
-		mergeSort(m_Data, 0, m_Length - 1);
+		//mergeSort(m_Data, 0, m_Length - 1);
+		recursiveSort();
 	}
 
 	void reverse()
@@ -326,7 +360,7 @@ public:
 
 	int32_t indexOf(T item)
 	{
-		for(uint32_t i = 0; i < m_Length; ++i)
+		for (uint32_t i = 0; i < m_Length; ++i)
 		{
 			if (m_Data[i] == item) return i;
 		}
