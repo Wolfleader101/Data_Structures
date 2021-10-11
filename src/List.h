@@ -270,12 +270,12 @@ public:
 		return popped_item;
 	}
 
-	T const& get(uint32_t index)
+	T const& get(uint32_t index) const
 	{
 		return m_Data[index];
 	}
 
-	T* getAddr(uint32_t index)
+	T* getAddr(uint32_t index) const 
 	{
 		return &m_Data[index];
 	}

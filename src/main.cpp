@@ -1,5 +1,6 @@
 #include <iostream>
 #include "List.h"
+#include "Dictionary.h"
 
 
 void PrintList(List<int>& array)
@@ -20,14 +21,21 @@ void PrintList(List<int>& array)
 
 int main()
 {
-	List<int> array = List<int>(new int[6]{ 6, 5, 3, 4, 1, 2 }, 6);
-		
-	PrintList(array);
 
-	array.sort();
+	KeyValuePair<std::string, int> user = KeyValuePair<std::string, int>("James", 5);
+	std::cout << "Key: " << user.key() << std::endl;
+	std::cout << "Value: " << user.value() << std::endl;
+	//List<int> array = List<int>(new int[6]{ 6, 5, 3, 4, 1, 2 }, 6);
+	//	
+	//PrintList(array);
 
-	PrintList(array);
+	//array.sort();
 
+	//PrintList(array);
+
+	//array.reverse();
+
+	//PrintList(array);
 
 	//array.replace(0, 5);
 	////array.insert(1, 69);

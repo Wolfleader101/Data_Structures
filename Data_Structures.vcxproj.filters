@@ -23,5 +23,11 @@
     <ClInclude Include="src\List.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Dictionary.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\KeyValuePair.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
